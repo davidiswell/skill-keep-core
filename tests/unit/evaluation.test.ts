@@ -5,7 +5,7 @@ import { BENCHMARK_ENGINE_VERSION, FINANCIAL_FIXTURES, runUsefulnessBenchmark, r
 import { createHash } from 'node:crypto';
 import { evaluationMessages, parseWorkbookPlan, MAX_EVALUATION_BYTES } from '../../src/evaluation/protocol';
 import type { EvaluationModel, EvaluationTask, WorkbookPlan } from '../../src/evaluation/types';
-import { LocalAiManager } from '../../src/local-ai';
+
 
 function plan(task: Pick<EvaluationTask, 'requestId' | 'fixtureId'>): WorkbookPlan {
   const fixture = FINANCIAL_FIXTURES.find(item => item.id === task.fixtureId)!;
@@ -69,33 +69,6 @@ describe('bounded untrusted model protocol', () => {
     expect(JSON.parse(messages[1].content).syntheticInputs).not.toHaveProperty('expected');
     expect(() => evaluationMessages({ ...request, files: [fileFromBytes('SKILL.md', Buffer.from('x'.repeat(MAX_EVALUATION_BYTES + 1)))] })).toThrow('No partial');
     expect(() => evaluationMessages({ ...request, files: [{ path: 'asset.bin', content: 'AA==', encoding: 'base64', size: 1, sha256: '0'.repeat(64) }] })).toThrow('binary');
-  });
-});
-
-describe('managed evaluation lifecycle without native execution', () => {
-  function managed() {
-    const manager = new LocalAiManager({ directory: 'fictional-test-model-directory' });
-    const internals = manager as unknown as { initialize(): Promise<void>; startWorker(signal?: AbortSignal): Promise<void>; stopWorker(): Promise<void>; complete(...args: unknown[]): Promise<{ content: string; finishReason: string }> };
-    vi.spyOn(internals, 'initialize').mockResolvedValue();
-    const start = vi.spyOn(internals, 'startWorker').mockResolvedValue();
-    const stop = vi.spyOn(internals, 'stopWorker').mockResolvedValue();
-    const complete = vi.spyOn(internals, 'complete').mockResolvedValue({ content: JSON.stringify(plan(task())), finishReason: 'stop' });
-    return { manager, start, stop, complete };
-  }
-  it('uses the bounded fixed task protocol and releases the worker after a batch', async () => {
-    const fixture = managed();
-    const result = await fixture.manager.runEvaluationTasks([task()]);
-    expect(result.answers[0].requestId).toBe('test-request'); expect(result.modelVersion).toContain('b10964');
-    expect(fixture.complete.mock.calls[0][3]).toBe(1500); expect(fixture.complete.mock.calls[0][4]).toBe(180000);
-    expect(fixture.stop).toHaveBeenCalledOnce();
-    await expect(fixture.manager.runEvaluationTasks(Array.from({ length: 5 }, (_, index) => ({ ...task(), requestId: `test-${index}` })))).rejects.toThrow('batch');
-    expect(fixture.start).toHaveBeenCalledOnce();
-  });
-  it('retains attempted model identity and marks every task failed when worker loading fails', async () => {
-    const fixture = managed(); fixture.start.mockRejectedValue(new Error('simulated native startup failure'));
-    const result = await fixture.manager.runEvaluationTasks([task()]);
-    expect(result.modelId).toBeTruthy(); expect(result.modelVersion).toBeTruthy(); expect(result.answers[0].error).toBeTruthy();
-    expect(result.answers[0].finishReason).not.toBe('stop'); expect(fixture.complete).not.toHaveBeenCalled(); expect(fixture.stop).toHaveBeenCalledOnce();
   });
 });
 

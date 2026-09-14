@@ -4,8 +4,8 @@
   "files": [
     {
       "path": ".github/workflows/ci.yml",
-      "bytes": 378,
-      "sha256": "cd38d399bb29f8fd8651b19baa93c1c5a68b22e0fd8548fbdc91faba8062d2a3"
+      "bytes": 464,
+      "sha256": "24241491fbe3c7f1059907aad7fffe5ff42c7674c7e0bf660eb49c578b61b805"
     },
     {
       "path": ".gitignore",
@@ -174,8 +174,8 @@
     },
     {
       "path": "tests/unit/evaluation.test.ts",
-      "bytes": 12816,
-      "sha256": "4c8bd7adf1bff3ca5291e972401b4e767d629dfcb95b6a2ed79a3f8110bc889f"
+      "bytes": 10667,
+      "sha256": "ac1ebf2cc784d10ea06ebace7f3f864fa648f8716e06ef6c31821f111fad91c0"
     },
     {
       "path": "vitest.config.ts",
