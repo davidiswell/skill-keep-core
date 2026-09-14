@@ -39,7 +39,7 @@ export function restrictedTermEvidence(policy: Policy, term: string, policyHash 
 
 export function hashPolicy(policy: Policy): string {
   // Activation and timestamps are UI state; every substantive rule and source clause is bound.
-  return digest(JSON.stringify({ id: policy.id, version: policy.version, name: policy.name, organization: policy.organization || '', description: policy.description, restrictedTerms: [...policy.restrictedTerms].sort(), allowedTerms: [...policy.allowedTerms].sort(), requireEmployerPermission: policy.requireEmployerPermission, rules: [...policy.rules].sort((a, b) => a.id.localeCompare(b.id)).map(r => ({ id: r.id, description: r.description, action: r.action, category: r.category, terms: [...(r.terms || [])].sort(), sourceClause: r.sourceClause || '', enabled: r.enabled })), sourceText: policy.sourceText || '', trust: policy.trust }));
+  return digest(JSON.stringify({ id: policy.id, version: policy.version, name: policy.name, organization: policy.organization || '', description: policy.description, restrictedTerms: [...policy.restrictedTerms].sort(), allowedTerms: [...policy.allowedTerms].sort(), requireEmployerPermission: policy.requireEmployerPermission, ...(policy.allowApiProcessing!==undefined?{allowApiProcessing:policy.allowApiProcessing}:{}), rules: [...policy.rules].sort((a, b) => a.id.localeCompare(b.id)).map(r => ({ id: r.id, description: r.description, action: r.action, category: r.category, terms: [...(r.terms || [])].sort(), sourceClause: r.sourceClause || '', enabled: r.enabled })), sourceText: policy.sourceText || '', trust: policy.trust }));
 }
 const SHIPPED_BASELINE = createDefaultPolicy();
 const SHIPPED_BASELINE_HASH = hashPolicy(SHIPPED_BASELINE);
@@ -64,6 +64,7 @@ export function parsePolicyDocument(text: string, filename: string): Policy {
     policy.restrictedTerms = strings(data.restrictedTerms, 'Restricted terms');
     policy.allowedTerms = strings(data.allowedTerms, 'Allowed terms');
     if (typeof data.requireEmployerPermission === 'boolean') policy.requireEmployerPermission = data.requireEmployerPermission;
+    if (typeof data.allowApiProcessing === 'boolean') policy.allowApiProcessing = data.allowApiProcessing;
     if (data.rules !== undefined) {
       if (!Array.isArray(data.rules) || data.rules.length > 100) throw new Error('A policy may contain at most 100 rules.');
       policy.rules = data.rules.map((raw: unknown, i: number): PolicyRule => {

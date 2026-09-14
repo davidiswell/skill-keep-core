@@ -1,6 +1,6 @@
 {
   "name": "skill-keep-core",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "files": [
     {
       "path": ".github/workflows/ci.yml",
@@ -19,13 +19,18 @@
     },
     {
       "path": "README.md",
-      "bytes": 4932,
-      "sha256": "f7b86adc69413014c2698266765b06cf2815f22e6cd3d094467a090e94ca4235"
+      "bytes": 3457,
+      "sha256": "8e0ee22994a750c0365cd4839d5e94b53e2c6532c61dc4abcaa1df0185f5e565"
     },
     {
       "path": "SECURITY.md",
-      "bytes": 814,
-      "sha256": "92d0191609b964f9d764786eb061265e3a0d92a84cfbd3023aff8d0e3dcedc6e"
+      "bytes": 1382,
+      "sha256": "5bd8e6fbd5c1b4d22de0cbae21a67f6637a40a42afb56360f388938ee93f8c48"
+    },
+    {
+      "path": "TESTING.md",
+      "bytes": 4422,
+      "sha256": "73fd6f6494185515649ac90f4c8f95b622972ea8909bb33db46a2d134754b1eb"
     },
     {
       "path": "THIRD-PARTY-NOTICES.txt",
@@ -55,12 +60,12 @@
     {
       "path": "package-lock.json",
       "bytes": 56507,
-      "sha256": "4f2a4cce88ab08d9dd45f2dd42fb5cf451e83712c3d55c14d9e380a0536ef334"
+      "sha256": "5fce25b3a8b6e22757b2d790ff1d77faf8fddf734cb445c0903707c62f0d2fcb"
     },
     {
       "path": "package.json",
-      "bytes": 928,
-      "sha256": "adb55a0a3d99810da856555be556f7ed015ec17e0f9527dd9600fb86ec79a6fc"
+      "bytes": 926,
+      "sha256": "039c83956bcd3b5d4d81eb4e80abb1c57527c6888e16ef21903a9c6df9a47c7c"
     },
     {
       "path": "src/core/baseline.ts",
@@ -104,8 +109,8 @@
     },
     {
       "path": "src/core/policy.ts",
-      "bytes": 8266,
-      "sha256": "2d2c46c378d883b33aeef179753a84726a829b3a27d632a68c26f9e2ad53edd6"
+      "bytes": 8467,
+      "sha256": "411837dce2147d8111867c07b4345acaf12a4878976bf6b28d8fcffe1cc7fbb1"
     },
     {
       "path": "src/core/portability.ts",
@@ -159,8 +164,8 @@
     },
     {
       "path": "src/shared/types.ts",
-      "bytes": 3334,
-      "sha256": "c83e086ce0a43b78791055e26617f67c32b6f0416ae4a7174011fb775cf5ae0d"
+      "bytes": 3375,
+      "sha256": "138c0a75e9ad3b94e0b57f56a25315dd1b921404a32fad29e251d7d85c0638a0"
     },
     {
       "path": "tests/unit/core-provenance.test.ts",

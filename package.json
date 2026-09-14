@@ -1,7 +1,7 @@
 {
   "name": "skill-keep-core",
-  "version": "0.3.0",
-  "description": "Local skill cleaning, policy evidence, portable workflow provenance, receipts, and fictional benchmarks.",
+  "version": "0.4.0",
+  "description": "Portable AI skills with policy checks, cleaning, provenance, and verifiable exports.",
   "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
@@ -14,6 +14,7 @@
     "THIRD-PARTY-NOTICES.txt",
     "README.md",
     "SECURITY.md",
+    "TESTING.md",
     "LICENSE"
   ],
   "engines": {
