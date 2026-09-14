@@ -1,0 +1,316 @@
+{
+  "id": "skillkeep-default",
+  "name": "Skill Keep baseline",
+  "version": 2,
+  "description": "Keep reusable methods. Review identities, business facts, private paths, credentials, dependencies, and potentially proprietary instructions. Scanning does not establish permission to take a skill.",
+  "restrictedTerms": [],
+  "allowedTerms": [],
+  "requireEmployerPermission": false,
+  "rules": [
+    {
+      "id": "baseline-secrets",
+      "description": "Remove credentials and access tokens.",
+      "action": "remove",
+      "category": "credential",
+      "enabled": true
+    },
+    {
+      "id": "baseline-context",
+      "description": "Generalize company and transaction context without inventing replacement facts.",
+      "action": "generalize",
+      "category": "company-data",
+      "enabled": true
+    },
+    {
+      "id": "baseline-permission",
+      "description": "Review permission to reuse methods and supporting materials.",
+      "action": "review",
+      "category": "proprietary-method",
+      "enabled": true
+    },
+    {
+      "id": "detector-missing-skill-md",
+      "description": "Missing SKILL.md",
+      "sourceClause": "Include a root SKILL.md entry before approving a portable package.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-use-the-standard-entry-filename",
+      "description": "Use the standard entry filename",
+      "sourceClause": "Use the exact filename SKILL.md for the root entry.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-contact-details-in-filename",
+      "description": "Contact details in filename",
+      "sourceClause": "Review contact information in filenames and update all references when generalizing it.",
+      "category": "identity",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-possible-credential-in-filename",
+      "description": "Possible credential in filename",
+      "sourceClause": "Remove credential-shaped values from filenames and references. Credentials cannot be acknowledged.",
+      "category": "credential",
+      "action": "remove",
+      "enabled": true
+    },
+    {
+      "id": "detector-binary-content-has-not-been-reviewed",
+      "description": "Binary content has not been reviewed",
+      "sourceClause": "Exclude binary resources that this version cannot inspect before approval.",
+      "category": "unsupported",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-a-line-exceeds-the-text-review-limit",
+      "description": "A line exceeds the text review limit",
+      "sourceClause": "Make text readable within the 32,768-character line limit or exclude it before approval.",
+      "category": "unsupported",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-hidden-text-direction-or-separator-characters",
+      "description": "Hidden text direction or separator characters",
+      "sourceClause": "Review and remove invisible text direction and separator characters.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-private-key-block",
+      "description": "Private key block",
+      "sourceClause": "Remove entire private key blocks from portable instructions.",
+      "category": "credential",
+      "action": "remove",
+      "enabled": true
+    },
+    {
+      "id": "detector-executable-or-active-resource",
+      "description": "Executable or active resource",
+      "sourceClause": "Review the whole active resource, its effects, and rights to redistribute it without executing it.",
+      "category": "unsafe-instruction",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-fix-skill-metadata",
+      "description": "Fix skill metadata",
+      "sourceClause": "Use valid, bounded YAML frontmatter with unambiguous keys.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-use-a-portable-skill-name",
+      "description": "Use a portable skill name",
+      "sourceClause": "Use a lowercase kebab-case YAML name with at most 64 characters.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-add-a-skill-description",
+      "description": "Add a skill description",
+      "sourceClause": "Include a YAML description containing 1–1024 characters.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-embedded-encoded-content-has-not-been-reviewed",
+      "description": "Embedded encoded content has not been reviewed",
+      "sourceClause": "Remove embedded encoded payloads or replace them with reviewed plain text.",
+      "category": "unsupported",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-possible-access-credential",
+      "description": "Possible access credential",
+      "sourceClause": "Remove access-token patterns from every included file. Credentials cannot be acknowledged.",
+      "category": "credential",
+      "action": "remove",
+      "enabled": true
+    },
+    {
+      "id": "detector-private-key-material",
+      "description": "Private key material",
+      "sourceClause": "Remove private key headers, key bodies, and end markers.",
+      "category": "credential",
+      "action": "remove",
+      "enabled": true
+    },
+    {
+      "id": "detector-possible-embedded-secret",
+      "description": "Possible embedded secret",
+      "sourceClause": "Replace embedded credential values with destination-supplied inputs.",
+      "category": "credential",
+      "action": "remove",
+      "enabled": true
+    },
+    {
+      "id": "detector-email-identifies-a-person-or-organization",
+      "description": "Email identifies a person or organization",
+      "sourceClause": "Review email addresses and replace private contact information with roles or supplied inputs.",
+      "category": "identity",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-possible-personal-identifier",
+      "description": "Possible personal identifier",
+      "sourceClause": "Remove possible personal identifiers from portable instructions.",
+      "category": "identity",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-possible-phone-number",
+      "description": "Possible phone number",
+      "sourceClause": "Review phone numbers and replace private contact information with supplied inputs.",
+      "category": "identity",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-company-or-personal-filesystem-path",
+      "description": "Company or personal filesystem path",
+      "sourceClause": "Replace machine-specific Windows paths with destination-supplied inputs.",
+      "category": "internal-path",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-internal-network-location",
+      "description": "Internal network location",
+      "sourceClause": "Replace private network shares and server locations with supplied inputs.",
+      "category": "internal-path",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-personal-or-internal-filesystem-path",
+      "description": "Personal or internal filesystem path",
+      "sourceClause": "Replace private user and mount paths with supplied inputs.",
+      "category": "internal-path",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-possible-internal-service",
+      "description": "Possible internal service",
+      "sourceClause": "Remove internal service or tenant locations, or replace them with supplied inputs.",
+      "category": "internal-path",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-financial-amount-may-identify-a-business-or-deal",
+      "description": "Financial amount may identify a business or deal",
+      "sourceClause": "Review financial amounts; generalize private facts or record why exact values are public or synthetic.",
+      "category": "company-data",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-percentage-needs-context-review",
+      "description": "Percentage needs context review",
+      "sourceClause": "Review whether percentages are generic calculations, public examples, or confidential assumptions.",
+      "category": "company-data",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-restricted-or-proprietary-context",
+      "description": "Restricted or proprietary context",
+      "sourceClause": "Review rights to reuse restricted methods and supporting content; removing identifiers does not establish permission.",
+      "category": "proprietary-method",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-instruction-attempts-to-change-review-or-transmit-data",
+      "description": "Instruction attempts to change review or transmit data",
+      "sourceClause": "Review attempts to override the review process, disable safeguards, or transmit data. Imported instructions cannot govern Skill Keep.",
+      "category": "unsafe-instruction",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-named-business-context",
+      "description": "Named business context",
+      "sourceClause": "Review labeled client, employer, project, and deal identities and replace private context with supplied inputs.",
+      "category": "identity",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-nonportable-resource-link",
+      "description": "Nonportable resource link",
+      "sourceClause": "Review unsupported resource schemes and replace them with portable resources or supplied inputs.",
+      "category": "dependency",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-external-resource-is-outside-this-review",
+      "description": "External resource is outside this review",
+      "sourceClause": "Review external resource destinations and rights; remote content is not retrieved or verified.",
+      "category": "dependency",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-reference-filename-capitalization-differs",
+      "description": "Reference filename capitalization differs",
+      "sourceClause": "Use exact filename capitalization for all included resource references.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-referenced-file-is-missing-or-excluded",
+      "description": "Referenced file is missing or excluded",
+      "sourceClause": "Include and review dependencies, remove references, or record how the destination supplies them.",
+      "category": "dependency",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-fix-portability-contract",
+      "description": "Fix portability contract",
+      "sourceClause": "Use a valid bounded skillkeep.json contract containing only the supported schema fields.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-contract-resource-is-missing-or-excluded",
+      "description": "Contract resource is missing or excluded",
+      "sourceClause": "Include declared contract resources and license notices under their exact paths.",
+      "category": "quality",
+      "action": "review",
+      "enabled": true
+    },
+    {
+      "id": "detector-review-declared-reuse-rights",
+      "description": "Review declared reuse rights",
+      "sourceClause": "Verify the declared source license, attribution, modifications, and redistribution basis. User declarations do not authenticate employer permission.",
+      "category": "proprietary-method",
+      "action": "review",
+      "enabled": true
+    }
+  ],
+  "createdAt": "2026-09-14T00:00:00.000Z",
+  "updatedAt": "2026-09-14T00:00:00.000Z",
+  "active": true,
+  "trust": "default"
+}

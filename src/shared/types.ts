@@ -1,0 +1,16 @@
+import type { FindingEvidence, CleaningChange, PortabilityContract, ReceiptPayload, ReceiptVerification } from '../core/contracts';
+import type { BenchmarkReport } from '../evaluation/types';
+export type { FindingEvidence, CleaningChange, PortabilityContract, ReceiptPayload, ReceiptVerification, BenchmarkReport };
+export type SourceFormat = 'agent-skills' | 'claude' | 'chatgpt' | 'codex' | 'text';
+export type FindingCategory = 'credential' | 'identity' | 'company-data' | 'internal-path' | 'proprietary-method' | 'dependency' | 'unsafe-instruction' | 'unsupported' | 'policy' | 'quality';
+export type Severity = 'critical' | 'high' | 'medium' | 'low';
+export interface SkillFile { path: string; content: string; encoding: 'utf8' | 'base64'; size: number; sha256: string; excluded?: boolean }
+export interface SkillVersion { id: string; createdAt: string; kind: 'import' | 'draft' | 'release' | 'source'; files: SkillFile[]; contentHash: string; note: string; changes?: CleaningChange[]; sourceContentHash?: string; baselineVersionId?: string }
+export interface Finding { id: string; filePath: string; startLine: number; endLine: number; category: FindingCategory; severity: Severity; title: string; detail: string; excerpt: string; source: 'rules' | 'model'; suggestion?: string; status: 'open' | 'resolved' | 'acknowledged'; resolutionNote?: string; evidence?: FindingEvidence[] }
+export interface ReviewReport { id: string; createdAt: string; policyId: string; policyVersion: number; policyHash: string; modelId?: string; modelVersion?: string; mode: 'rules' | 'local-ai'; findings: Finding[]; filesScanned: number; filesTotal: number; complete: boolean; contentHash: string; warnings: string[]; changes?: CleaningChange[]; sourceContentHash?: string }
+export interface Approval { versionId: string; contentHash: string; reviewer: string; permissionBasis: 'own-work' | 'employer-permission'; notes: string; approvedAt: string; policyId: string; policyVersion: number; policyHash: string; reviewId: string }
+export interface SkillRecord { id: string; name: string; description: string; sourceFormat: SourceFormat; tags: string[]; createdAt: string; updatedAt: string; status: 'imported' | 'review' | 'ready' | 'archived'; versions: SkillVersion[]; currentVersionId: string; review?: ReviewReport; approval?: Approval; approvalHistory?: Approval[]; archivedAt?: string; benchmark?: BenchmarkReport; baselineVersionId?: string }
+export interface PolicyRule { id: string; description: string; action: 'remove' | 'generalize' | 'review' | 'allow'; category: FindingCategory; terms?: string[]; sourceClause?: string; enabled: boolean }
+export interface Policy { id: string; name: string; organization?: string; version: number; description: string; restrictedTerms: string[]; allowedTerms: string[]; rules: PolicyRule[]; requireEmployerPermission: boolean; sourceText?: string; sourceFilename?: string; createdAt: string; updatedAt: string; active: boolean; trust: 'default' | 'user-configured' }
+export interface JobProgress { jobId: string; kind: 'import' | 'scan' | 'clean' | 'model-download' | 'backup' | 'benchmark'; status: 'running' | 'done' | 'cancelled' | 'error'; message: string; percent?: number; current?: number; total?: number; skillId?: string }
+export type ExportTarget = 'portable' | 'claude' | 'chatgpt' | 'codex';
