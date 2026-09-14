@@ -86,6 +86,7 @@ export function validateNoticePreservation(record: SkillRecord, currentFiles: Sk
   const initial = record.versions.find(version => version.kind === 'import') || record.versions[0];
   const baselineId = (record as SkillRecord & { baselineVersionId?: string }).baselineVersionId;
   const baseline = baselineId ? record.versions.find(version => version.id === baselineId) : undefined;
+  if (baselineId !== undefined && (!baseline || !['import', 'source'].includes(baseline.kind))) throw new Error('The original source revision reference is invalid. Restore valid source ancestry before exporting.');
   const current = normalizeFiles(currentFiles).filter(file => !file.excluded);
   const currentContract = readPortabilityContract(current);
   const currentDeclarations = declarations(current);

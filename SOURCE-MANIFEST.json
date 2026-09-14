@@ -109,8 +109,8 @@
     },
     {
       "path": "src/core/portability.ts",
-      "bytes": 9733,
-      "sha256": "9385caa84dd4a6dfff6ef26ef1ca7b780a34eae7a8da0ab6798167be2cb1d9a8"
+      "bytes": 9948,
+      "sha256": "102ac7500330ae0a33b38e9cad4770c9a051f3ec5119297b7fd576fb02122f90"
     },
     {
       "path": "src/core/receipt.ts",
@@ -164,8 +164,8 @@
     },
     {
       "path": "tests/unit/core-provenance.test.ts",
-      "bytes": 19954,
-      "sha256": "1ccafc03ac6f77345c68756984f842d5fdf5d376491f45847fc841cdb3f20438"
+      "bytes": 20506,
+      "sha256": "3ac96833436b09e19e0b6a3b2bac708621a25f828a116e462e6077391db1f7cf"
     },
     {
       "path": "tests/unit/core.test.ts",

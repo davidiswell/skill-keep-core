@@ -159,6 +159,14 @@ describe('reviewed portability and authorship contracts', () => {
     const attributed = clean(); attributed[0].content += '\nCopyright (c) 2024 Example Author\n';
     expect(() => validateNoticePreservation(approved(clean(), createDefaultPolicy(), attributed), clean())).toThrow(/inline/);
   });
+  it('rejects dangling and non-source baseline references instead of skipping source notices', () => {
+    const files = clean(), policy = createDefaultPolicy(), record = approved(files, policy, files);
+    for (const baselineVersionId of ['missing-source', 'current', '']) {
+      record.baselineVersionId = baselineVersionId;
+      expect(() => validateNoticePreservation(record, files)).toThrow(/source revision reference is invalid/);
+      expect(() => validateRelease(record, policy)).toThrow(/source revision reference is invalid/);
+    }
+  });
 });
 
 describe('signed export receipts', () => {
